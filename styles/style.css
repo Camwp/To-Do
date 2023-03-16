@@ -1,0 +1,93 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  #to-do-list {
+    margin: auto;
+    width: 50%;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+    text-align: center;
+  }
+  
+  #new-item-input {
+    width: 75%;
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid black;
+    margin-right: 10px;
+  }
+  
+  #add-item-button {
+    padding: 10px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+  }
+  
+  #add-item-button:hover {
+    background-color: #3e8e41;
+  }
+  
+  #item-list {
+    list-style-type: none;
+    padding: 0;
+    
+  }
+  .item-content {
+    float: left;
+  }
+  .button-container {
+    
+    float: right;
+  }
+  span {
+    margin-right: 20px;
+  }
+  #item-list li {
+    height: 20px;
+    margin: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    cursor: move; /* make the list item draggable */
+  }
+  
+  #item-list li:hover {
+    background-color: #f2f2f2;
+  }
+  
+  #item-list li button {
+    padding: 5px;
+    margin-top: -2.5px;
+    margin-left: 3px;
+    background-color: #6080ff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  #item-list li button:hover {
+    background-color: #3d5ee1;
+  }
+  
+  .placeholder {
+    background-color: #e5e5e5;
+    height: 50px;
+    margin: 10px;
+    padding: 10px;
+    border: 1px dashed #ccc;
+    box-sizing: border-box;
+  }
+  
+  .invisible {
+    opacity: 0.5;
+  }
+  
