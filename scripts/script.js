@@ -55,6 +55,8 @@ function addItemToList(itemName, timeLogged) {
 
     //Buttons for item
     const removeButton = document.createElement('button');
+    removeButton.className = "delButton";
+    //removeButton.style.backgroundColor = 'red';
     removeButton.innerText = 'X';
     removeButton.addEventListener('click', () => {
       itemList.removeChild(newItem);
@@ -69,8 +71,12 @@ function addItemToList(itemName, timeLogged) {
     buttonContainer.appendChild(startButton);
     const pauseButton = document.createElement('button');
     pauseButton.innerText = 'Pause';
-    buttonContainer.appendChild(pauseButton);  
+    buttonContainer.appendChild(pauseButton);
+    const resetButton = document.createElement('button');
+    resetButton.innerText = 'Reset';
+    buttonContainer.appendChild(resetButton);  
     buttonContainer.appendChild(removeButton);
+    
 
     newItem.addEventListener('dragstart', dragStart);
     newItem.addEventListener('dragend', dragEnd);
@@ -118,8 +124,17 @@ function addItemToList(itemName, timeLogged) {
         clearInterval(timerInterval);
         pausedTime = Date.now() - startTime;
         running = false;
-        
-        
+
+        // Save the elapsed time to localStorage
+        localStorage.setItem(newItemText, pausedTime);
+      }
+    });
+    resetButton.addEventListener('click', () => {
+      if (!running) {
+        clearInterval(timerInterval);
+        pausedTime = 0;
+        running = false;
+        timerDisplay.innerText = "0:00:00";
         // Save the elapsed time to localStorage
         localStorage.setItem(newItemText, pausedTime);
       }
@@ -129,7 +144,7 @@ function addItemToList(itemName, timeLogged) {
   }
   
 }
-
+// Format elapsed time (technically in ms) to the desired format h:mm:ss
 function formatTime(totalSeconds) {
   const hours = Math.floor(totalSeconds / 3600000)
   .toString()

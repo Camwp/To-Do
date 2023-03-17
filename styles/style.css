@@ -73,9 +73,24 @@ body {
     border: none;
     cursor: pointer;
   }
+
   
   #item-list li button:hover {
     background-color: #3d5ee1;
+  }
+
+  #item-list li .delButton {
+    padding: 5px;
+    margin-top: -2.5px;
+    margin-left: 3px;
+    background-color: #ff5454;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  #item-list li .delButton:hover {
+    background-color: #ce1c1c;
   }
   
   .placeholder {
