@@ -75,7 +75,6 @@ function addItemToList(itemName, timeLogged) {
     newItem.addEventListener('dragstart', dragStart);
     newItem.addEventListener('dragend', dragEnd);
     
-    
    //Time control
     let timerInterval;
     let startTime;
@@ -98,13 +97,6 @@ function addItemToList(itemName, timeLogged) {
         running = true;
       }
     });
-    if (localStorage.key(newItemText) != "debug") {
-      const added_logged_timer = localStorage.key(newItemText)
-      const actual_timer = localStorage.getItem(added_logged_timer)
-      console.log(actual_timer);
-      //let item_timer = actual_timer.split(":");
-      timerDisplay.innerText = actual_timer//`${item_timer[0]}:${item_timer[1]}:${item_timer[2]}`;
-  }
     pauseButton.addEventListener('click', () => {
       if (running) {
         clearInterval(timerInterval);
