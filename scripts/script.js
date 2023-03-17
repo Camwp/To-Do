@@ -2,7 +2,7 @@ const newItemInput = document.getElementById('new-item-input');
 const addItemButton = document.getElementById('add-item-button');
 
 const itemList = document.getElementById('item-list');
-const taskTimeLogged = "0:00:00";
+const taskTimeLogged = 0;
 
 
 addItemButton.addEventListener('click', () => {
@@ -75,14 +75,30 @@ function addItemToList(itemName, timeLogged) {
     newItem.addEventListener('dragstart', dragStart);
     newItem.addEventListener('dragend', dragEnd);
     
+
+    const grabbed_item = localStorage.getItem(newItemText); ///////
+    console.log(grabbed_item);   ///////
+    //const formattedTime = formatTimeDisplay(grabbed_item); // format the paused time
+    timerDisplay.innerText = formatTime(grabbed_item);
+    console.log(formatTime(grabbed_item));
+
    //Time control
     let timerInterval;
     let startTime;
     let pausedTime = 0;
     let running = false;
+    
     startButton.addEventListener('click', () => {
       if (!running) {
-        startTime = Date.now() - pausedTime;
+        if (localStorage.getItem(newItemText) !== '0:00:00') {
+          pausedTime = parseInt(localStorage.getItem(newItemText));
+          console.log(pausedTime);
+          startTime = Date.now() - pausedTime;
+        } else {
+          // Start the timer from 0
+          startTime = Date.now() - pausedTime;
+        }
+        //startTime = Date.now() - pausedTime;
         timerInterval = setInterval(() => {
           const elapsedTime = Date.now() - startTime;
           const hours = Math.floor(elapsedTime / 3600000);
@@ -102,15 +118,29 @@ function addItemToList(itemName, timeLogged) {
         clearInterval(timerInterval);
         pausedTime = Date.now() - startTime;
         running = false;
-        //Contemplating adding a saving and loading feature somwhere
-        const key = localStorage.key(newItemText);
-        const value = localStorage[key];
-        const text = document.createTextNode(value);
-        localStorage.setItem(newItemText, timerDisplay.innerText)
+        
+        
+        // Save the elapsed time to localStorage
+        localStorage.setItem(newItemText, pausedTime);
       }
     });
+    
+    newItemInput.value = "";
   }
-  newItemInput.value = "";
+  
+}
+
+function formatTime(totalSeconds) {
+  const hours = Math.floor(totalSeconds / 3600000)
+  .toString()
+  .padStart(1, '0');
+  const minutes = Math.floor((totalSeconds % 3600000) / 60000)
+  .toString()
+  .padStart(2, '0');
+  const seconds = Math.floor((totalSeconds % 60000) / 1000)
+  .toString()
+  .padStart(2, '0');
+  return `${hours.toString().padStart(1, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
 function dropItem(event) {
