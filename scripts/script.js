@@ -1,15 +1,9 @@
+// [ To-Do List  || By: Cameron Pedro ]
 const newItemInput = document.getElementById('new-item-input');
 const addItemButton = document.getElementById('add-item-button');
 
 const itemList = document.getElementById('item-list');
 const taskTimeLogged = 0;
-
-
-addItemButton.addEventListener('click', () => {
-  localStorage.setItem(newItemInput.value, taskTimeLogged)
-  addItemToList(newItemInput.value, taskTimeLogged)
-  
-});
 
 let draggedItem = null;
 let droppedItem = null;
@@ -17,22 +11,12 @@ let droppedItem = null;
 document.addEventListener('dragover', dragOver);
 document.addEventListener('drop', dropItem);
 
-function dragStart(event) {
-  draggedItem = event.target;
-  setTimeout(() => event.target.classList.add('invisible'), 0);
-}
+addItemButton.addEventListener('click', () => {
+  localStorage.setItem(newItemInput.value, taskTimeLogged)
+  addItemToList(newItemInput.value, taskTimeLogged)
+});
 
-function dragEnd(event) {
-  event.target.classList.remove('invisible');
-}
-
-function dragOver(event) {
-  event.preventDefault();
-  if (event.target.tagName === 'LI') {
-    event.target.classList.add('drag-over');
-  }
-}
-
+// Add item to list
 function addItemToList(itemName, timeLogged) {
   const newItemText = newItemInput.value;
   if (newItemText !== '') {
@@ -53,10 +37,9 @@ function addItemToList(itemName, timeLogged) {
     itemName.innerText = newItemText;
     itemContent.appendChild(itemName);
 
-    //Buttons for item
+    // Start Buttons for item
     const removeButton = document.createElement('button');
     removeButton.className = "delButton";
-    //removeButton.style.backgroundColor = 'red';
     removeButton.innerText = 'X';
     removeButton.addEventListener('click', () => {
       itemList.removeChild(newItem);
@@ -76,19 +59,20 @@ function addItemToList(itemName, timeLogged) {
     resetButton.innerText = 'Reset';
     buttonContainer.appendChild(resetButton);  
     buttonContainer.appendChild(removeButton);
-    
+    // End buttons for item
 
+    // Event listeners for dragging and dropping
     newItem.addEventListener('dragstart', dragStart);
     newItem.addEventListener('dragend', dragEnd);
     
-
-    const grabbed_item = localStorage.getItem(newItemText); ///////
-    console.log(grabbed_item);   ///////
-    //const formattedTime = formatTimeDisplay(grabbed_item); // format the paused time
+    // Start format time
+    const grabbed_item = localStorage.getItem(newItemText); 
+    console.log(grabbed_item);
     timerDisplay.innerText = formatTime(grabbed_item);
     console.log(formatTime(grabbed_item));
+    // End format time
 
-   //Time control
+   // Start Time control
     let timerInterval;
     let startTime;
     let pausedTime = 0;
@@ -139,10 +123,9 @@ function addItemToList(itemName, timeLogged) {
         localStorage.setItem(newItemText, pausedTime);
       }
     });
-    
     newItemInput.value = "";
   }
-  
+  // End time control
 }
 // Format elapsed time (technically in ms) to the desired format h:mm:ss
 function formatTime(totalSeconds) {
@@ -157,7 +140,23 @@ function formatTime(totalSeconds) {
   .padStart(2, '0');
   return `${hours.toString().padStart(1, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
-
+// Start drag
+function dragStart(event) {
+  draggedItem = event.target;
+  setTimeout(() => event.target.classList.add('invisible'), 0);
+}
+// End drag
+function dragEnd(event) {
+  event.target.classList.remove('invisible');
+}
+// Drag over item
+function dragOver(event) {
+  event.preventDefault();
+  if (event.target.tagName === 'LI') {
+    event.target.classList.add('drag-over');
+  }
+}
+// Drop item and changing priority
 function dropItem(event) {
   event.preventDefault();
   if (event.target.tagName === 'LI') {
@@ -172,6 +171,7 @@ function dropItem(event) {
     }
   }
 }
+// Load items from localStorage
 function loadItemsFromLocalStorage() {
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
